@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "rx.http.one-base-url",
+      "type": "java.lang.String",
+      "description": "Description for rx.http.one-base-url."
+    },
+    {
+      "name": "rx.http.two-base-url",
+      "type": "java.lang.String",
+      "description": "Description for rx.http.two-base-url."
+    }
+  ] }
