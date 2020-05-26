@@ -1,13 +1,14 @@
 package com.example.reactivex.laihuola;
 
 import com.example.reactivex.utils.MonoUtils;
-import com.example.reactivex.utils.MyEmptyException;
+import com.example.reactivex.utils.ResponseUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.function.Consumer;
@@ -26,7 +27,6 @@ public class LHLService {
         LoginBody body = new LoginBody(phone, captcha);
         return webClient.post()
                 .uri("/api/login")
-                .header("Authorization", "Bearer ")
                 .header("Domain-Name", "LaiHuoLa")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(body), LoginBody.class)
@@ -59,6 +59,17 @@ public class LHLService {
                         log.info("subscribe throwable");
                     }
                 });
+    }
+
+    public Mono<ServerResponse> pureLogin(String phone, String captcha) {
+        LoginBody body = new LoginBody(phone, captcha);
+        return webClient.post()
+                .uri("/api/login")
+                .header("Domain-Name", "LaiHuoLa")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(body), LoginBody.class)
+                .exchange()
+                .flatMap(ResponseUtils.asDataBuffer());
     }
 
 }

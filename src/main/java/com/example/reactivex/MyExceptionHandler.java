@@ -8,10 +8,10 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @RestControllerAdvice
-public class MonoHandler {
+public class MyExceptionHandler {
 
     @ExceptionHandler(WebClientResponseException.class)
-    public Mono<String> handleWebClientResponseException(WebClientResponseException ex) {
+    public Mono<String> webClientResponseException(WebClientResponseException ex) {
         log.error("Error from WebClient - Status {}, Body {}", ex.getRawStatusCode(), ex.getResponseBodyAsString(), ex);
         return Mono.just("error");
     }
